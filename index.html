@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATIVO BOT — Painel de proteção</title>
+<style>
+:root{--red:#d71920;--red2:#a90f17;--ink:#202124;--muted:#6b7280;--line:#f0c9cb;--bg:#fff7f7}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#fff 0%,#fff4f4 100%);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.wrap{max-width:920px;margin:auto;padding:24px 16px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:52px;height:52px;border-radius:16px;background:var(--red);display:grid;place-items:center;color:white;font-size:27px;box-shadow:0 8px 22px #d7192030}
+h1{font-size:22px;margin:0;color:var(--red);letter-spacing:1px}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.status{border:1px solid #f3c7c9;background:#fff;border-radius:999px;padding:8px 12px;font-size:12px;color:var(--red);font-weight:bold}
+.hero{background:var(--red);color:white;border-radius:24px;padding:26px;display:flex;justify-content:space-between;gap:18px;align-items:center;box-shadow:0 14px 34px #d7192028}
+.hero h2{font-size:25px;margin:0 0 8px}.hero p{margin:0;color:#ffe7e8;line-height:1.5;font-size:14px}.shield{font-size:64px;opacity:.95}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:16px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 18px #8b1a1a0a}
+h3{margin:0 0 14px;font-size:16px}.field{display:block;font-size:13px;font-weight:bold;margin:14px 0 7px}
+input{width:100%;padding:13px;border:1px solid #e5babc;border-radius:11px;font-size:14px;outline:none}input:focus{border-color:var(--red);box-shadow:0 0 0 3px #d7192018}
+button{border:0;border-radius:11px;padding:12px 15px;background:var(--red);color:white;font-weight:bold;cursor:pointer}
+button:hover{background:var(--red2)}button.secondary{background:white;color:var(--red);border:1px solid var(--line)}
+.full{width:100%;margin-top:12px}.hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
+.setting{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #f4e4e4}.setting:last-child{border:0}
+.setting strong{display:block;font-size:14px}.setting small{display:block;color:var(--muted);margin-top:4px;font-size:12px}
+.switch{appearance:none;width:42px;height:24px;border-radius:20px;background:#ddd;position:relative;cursor:pointer;flex:none;transition:.2s}
+.switch:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;background:white;border-radius:50%;transition:.2s;box-shadow:0 1px 3px #0003}
+.switch:checked{background:var(--red)}.switch:checked:before{transform:translateX(18px)}
+.commands{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.cmd{border:1px solid #f0d4d5;border-radius:10px;padding:10px;font-family:monospace;color:var(--red);font-size:13px;background:#fffafa}
+.notice{background:#fff4e5;border:1px solid #f5d7a7;color:#704b12;border-radius:13px;padding:13px;font-size:12px;line-height:1.5;margin-top:16px}
+#message{font-size:13px;color:var(--red);margin-top:10px;min-height:18px}
+footer{text-align:center;color:#8b8585;font-size:11px;margin-top:22px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:22px}.shield{font-size:48px}.top{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">🛡</div><div><h1>ATIVO BOT</h1><div class="sub">PAINEL DE PROTEÇÃO DE GRUPOS</div></div></div>
+    <div class="status">● DEMONSTRAÇÃO — NÃO CONECTADO</div>
+  </header>
+  <section class="hero">
+    <div><h2>Seu grupo, mais organizado.</h2><p>Configure as regras e prepare a integração do seu assistente de moderação.</p></div>
+    <div class="shield">🛡️</div>
+  </section>
+  <main class="grid">
+    <section class="card">
+      <h3>Conectar grupo</h3>
+      <label class="field" for="group">Link de convite do WhatsApp</label>
+      <input id="group" type="url" placeholder="https://chat.whatsapp.com/..." autocomplete="off">
+      <button class="full" id="connect">Preparar conexão</button>
+      <div id="message" role="status"></div>
+      <p class="hint">O link é apenas inserido nesta demonstração. Nenhum bot entra no grupo e nenhuma configuração é enviada ao WhatsApp.</p>
+    </section>
+    <section class="card">
+      <h3>Proteções desejadas</h3>
+      <div class="setting"><div><strong>Anti-spam</strong><small>Detectar mensagens repetidas</small></div><input class="switch" type="checkbox" checked aria-label="Anti-spam"></div>
+      <div class="setting"><div><strong>Anti-link</strong><small>Bloquear links não permitidos</small></div><input class="switch" type="checkbox" checked aria-label="Anti-link"></div>
+      <div class="setting"><div><strong>Controle de entrada</strong><small>Revisar novos participantes</small></div><input class="switch" type="checkbox" aria-label="Controle de entrada"></div>
+      <div class="setting"><div><strong>Moderação automática</strong><small>Aplicar regras do grupo</small></div><input class="switch" type="checkbox" checked aria-label="Moderação automática"></div>
+    </section>
+    <section class="card">
+      <h3>Comandos planejados</h3>
+      <div class="commands">
+        <div class="cmd">/ban @membro</div><div class="cmd">/antilink on</div>
+        <div class="cmd">/antispam on</div><div class="cmd">/banlist</div>
+        <div class="cmd">/regras</div><div class="cmd">/status</div>
+      </div>
+      <p class="hint">Os comandos só funcionarão depois que o bot real estiver conectado e tiver as permissões necessárias.</p>
+    </section>
+    <section class="card">
+      <h3>Próximos passos</h3>
+      <ol class="hint" style="padding-left:18px;line-height:1.8">
+        <li>Obter um número dedicado compatível.</li>
+        <li>Configurar a integração e a hospedagem.</li>
+        <li>Verificar se a plataforma permite a função de grupo desejada.</li>
+        <li>Adicionar o bot ao grupo e conceder permissões apropriadas.</li>
+      </ol>
+      <button class="secondary full" id="copy">Copiar comandos</button>
+    </section>
+  </main>
+  <div class="notice"><strong>Importante:</strong> este arquivo é um painel visual demonstrativo. Ele não acessa o WhatsApp, não lê mensagens, não bane participantes e não ativa proteção. A disponibilidade de moderação em grupos depende da integração e das regras atuais do WhatsApp. Nunca compartilhe códigos de verificação ou senhas.</div>
+  <footer>ATIVO BOT • Interface demonstrativa em vermelho e branco</footer>
+</div>
+<script>
+document.getElementById('connect').addEventListener('click',()=>{
+ const v=document.getElementById('group').value.trim();
+ const m=document.getElementById('message');
+ if(!/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+/.test(v)){m.textContent='Cole um link de convite válido do WhatsApp.';return;}
+ m.textContent='Link inserido. Para conectar de verdade, ainda falta configurar o serviço do bot e a integração compatível.';
+});
+document.getElementById('copy').addEventListener('click',async()=>{
+ const t='/ban @membro\n/antilink on\n/antispam on\n/banlist\n/regras\n/status';
+ try{await navigator.clipboard.writeText(t);alert('Comandos copiados!');}catch(e){alert(t);}
+});
+</script>
+</body>
+</html>
